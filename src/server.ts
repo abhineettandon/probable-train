@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 
 import { AuthRotues } from './routes';
+import { connectDatabase } from './utils/dbConnection'
 
 export class Server {
   public app: Application;
@@ -17,6 +18,8 @@ export class Server {
     this.registerMiddlewares();
 
     this.regsiterRoutes();
+
+    connectDatabase();
   }
 
   registerMiddlewares() {
