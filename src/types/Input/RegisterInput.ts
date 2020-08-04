@@ -1,6 +1,4 @@
-import { IsString, IsEmail } from 'class-validator';
-
-import { RolesEnum } from '../RolesEnum'
+import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
 
 export class RegisterInput {
   @IsString({ message: 'Firstname is required.' })
@@ -12,9 +10,9 @@ export class RegisterInput {
   @IsEmail({}, { message: 'Email should be valid.'})
   email: string;
 
+  @IsNotEmpty({ message: 'Password field should not be empty' })
+  password: string;
+
   @IsString({ message: 'Infusionsoft ID is required' })
   infusionSoftId: string;
-
-  @IsString({ message: 'Role is required' })
-  role: RolesEnum
 }

@@ -1,9 +1,11 @@
 import express, { Application } from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
+import { initialize, use } from 'passport';
 
 import { AuthRotues } from './routes';
 import { connectDatabase } from './utils/dbConnection'
+import { local } from './utils/strategies';
 
 export class Server {
   public app: Application;
@@ -19,17 +21,24 @@ export class Server {
 
     this.regsiterRoutes();
 
+    this.initializePassportAndStrategies();
+
     connectDatabase();
   }
 
   registerMiddlewares() {
     this.app.use(helmet());
     this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: false }));
   }
 
   regsiterRoutes() {
     this.app.use('/auth', AuthRotues);
+  }
+
+  initializePassportAndStrategies() {
+    use('local', local);
+    
+    this.app.use(initialize());
   }
 
   start() {
