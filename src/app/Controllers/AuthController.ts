@@ -103,6 +103,7 @@ class AuthController {
             email: user.email,
             infusionSoftId: user.infusionSoftId,
             role: user.role,
+            lastLogin: user.lastLogin
           },
           token
         }
