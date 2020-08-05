@@ -3,9 +3,10 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import { initialize, use } from 'passport';
 
-import { AuthRotues } from './routes';
+import { AuthRotues, UserRoutes } from './routes';
 import { connectDatabase } from './utils/dbConnection'
-import { local } from './utils/strategies';
+import { local, jwt } from './utils/strategies';
+import { OnlyAdmins } from './app/Middlewares';
 
 export class Server {
   public app: Application;
@@ -19,9 +20,9 @@ export class Server {
 
     this.registerMiddlewares();
 
-    this.regsiterRoutes();
-
     this.initializePassportAndStrategies();
+    
+    this.regsiterRoutes();
 
     connectDatabase();
   }
@@ -33,11 +34,13 @@ export class Server {
 
   regsiterRoutes() {
     this.app.use('/auth', AuthRotues);
+    this.app.use('/users', OnlyAdmins, UserRoutes);
   }
 
   initializePassportAndStrategies() {
     use('local', local);
-    
+    use('jwt', jwt);
+
     this.app.use(initialize());
   }
 
