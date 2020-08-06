@@ -6,7 +6,11 @@ export async function sendMail(template: string, to: string, variables: Object, 
     from: 'Admin Doe<admindoe@example.com>',
     subject, // @ts-ignore
     template, // @ts-ignore
-    context: variables
+    context: {
+      ...variables,
+      appName: process.env.APP_NAME,
+      supportEmail: process.env.SUPPORT_EMAIL,
+    }
   });
 
   mail
