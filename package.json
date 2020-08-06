@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --rs --transpile-only ./src/index.ts",
-    "build": "rimraf ./dist && tsc"
+    "build": "rimraf ./dist && tsc",
+    "start": "node ./dist"
   },
   "keywords": [],
   "author": "",

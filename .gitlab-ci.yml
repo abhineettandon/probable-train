@@ -1,0 +1,12 @@
+image: ruby:latest
+
+deploy_staging:
+  environment: staging
+  script:
+    - apt update -yq
+    - apt install ruby-dev -y
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+  only:
+    - master
+    
