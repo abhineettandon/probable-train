@@ -10,4 +10,5 @@ export interface UserInterface extends Document {
   password: string;
   role: RolesEnum;
   infusionSoftId: string;
+  lastLogin: Date;
 }

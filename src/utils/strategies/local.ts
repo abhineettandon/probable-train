@@ -21,5 +21,8 @@ export default new LocalStrategy(options, async (email, password, done)  => {
     return done(null, false, { message: 'Login credentials error' });
   }
 
+  user.lastLogin = new Date(Date.now());
+  await user.save();
+
   return done(null, user, { message: 'User found' });
 });

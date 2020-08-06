@@ -22,6 +22,10 @@ role: {
   type: String,
   required: true,
 },
+lastLogin: {
+  type: Date,
+  default: null
+}
 }, { timestamps: true });
 
 export { UserSchema };
