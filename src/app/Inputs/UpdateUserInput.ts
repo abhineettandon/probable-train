@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsEnum } from "class-validator";
-import { RolesEnum } from "../RolesEnum";
+import { RolesEnum } from "../../types/RolesEnum";
 
 export class UpdateUserInput {
   @IsString()
