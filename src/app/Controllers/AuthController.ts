@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { authenticate } from 'passport';
+import { hashSync } from 'bcryptjs';
 
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
-import { RegisterInput } from '../../types/Input/RegisterInput';
+import { RegisterInput } from '../Inputs/RegisterInput';
 import { User } from '../Models/User';
 import { UserInterface } from '../../types/UserInterface';
-import { LoginInput } from '../../types/Input/LoginInput';
+import { LoginInput } from '../Inputs/LoginInput';
 import { RolesEnum } from '../../types/RolesEnum';
 import { generateAuthToken } from '../../utils/jwt';
 import { sendMail } from '../../utils/sendMail';
@@ -31,35 +32,36 @@ class AuthController {
         constraints: error.constraints
       }));
 
-      return res.status(400).json({ errors: errorsInfo, data: [] });
+      return res.status(400).json({ error: { message: 'VALIDATIONS_ERROR', info: errorsInfo } });
     }
 
     // check if user exists for same email or not
 
     const user = await User.findOne({ email: input.email });
-    console.log('user', user);
 
     if (user) {
-      return res.status(409).json({ errors: [{ message: 'User alreay exists.' }], data: [] });
+      return res.status(409).json({ error: { message: 'User alreay exists.' } });
     }
+
+    const hashPassword = hashSync(input.password, process.env.APP_SECRET as string);
 
     // creating new user
     const newUser = await User.create({
       firstName: input.firstName,
       lastName: input.lastName,
       email: input.email,
-      password: input.password,
+      password: hashPassword,
       infusionSoftId: input.infusionSoftId,
       role: RolesEnum.USER,
     } as UserInterface);
-
+    console.log('registered user', newUser);
     if(newUser) {
       await sendMail('registration', newUser.email, newUser, 'Registration Successfull');
 
-      return res.json({ errors: [], data: newUser });
+      return res.json({ data: { message: 'Account created successfully.' } });
     }
 
-    return res.json({ errors: [{ message: 'Something went wrong.' }], data: [] });
+    return res.json({ error: { message: 'Something went wrong.' } });
 
   }
 
@@ -79,22 +81,21 @@ class AuthController {
         constraints: error.constraints
       }));
 
-      return res.status(400).json({ errors: errorsInfo, data: [] });
+      return res.status(400).json({ error: { message: 'VALIDATIONS_ERROR', info: { errorsInfo } } });
     }
 
     return authenticate('local', { session: false }, (err: any, user: UserInterface, message: Object) => {
       if (!user) {
         if(err) {
-          return res.status(400).json({ errors: err, data: {} });
+          return res.status(400).json({ error: err });
         }
 
-        return res.status(401).json({ errors: { message }, data: {}});
+        return res.status(401).json({ error: message });
       }
 
       const token = generateAuthToken(user);
 
       return res.json({
-        errors: [],
         data: {
           user: {
             id: user._id,

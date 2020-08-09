@@ -1,5 +1,5 @@
 import { Strategy as LocalStrategy, IStrategyOptions } from 'passport-local';
-import { compareSync } from 'bcrypt';
+import { compareSync } from 'bcryptjs';
 
 import { User } from '../../app/Models/User';
 
