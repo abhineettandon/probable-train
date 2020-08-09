@@ -3,10 +3,10 @@ import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import { initialize, use } from 'passport';
 
-import { AuthRotues, UserRoutes } from './routes';
+import { AuthRotues, ProfileRoutes, UserRoutes } from './routes';
 import { connectDatabase } from './utils/dbConnection'
 import { local, jwt } from './utils/strategies';
-import { OnlyAdmins } from './app/Middlewares';
+import { OnlyAdmins, Auth } from './app/Middlewares';
 
 export class Server {
   public app: Application;
@@ -34,6 +34,7 @@ export class Server {
 
   regsiterRoutes() {
     this.app.use('/auth', AuthRotues);
+    this.app.use('/profile', Auth, ProfileRoutes);
     this.app.use('/users', OnlyAdmins, UserRoutes);
   }
 

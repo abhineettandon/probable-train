@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { User } from '../Models/User';
-import { UpdateUserInput } from '../../types/Input/UpdateUserInput';
+import { UpdateUserInput } from '../Inputs/UpdateUserInput';
 import { validate } from 'class-validator';
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
 
@@ -14,9 +14,9 @@ export class UsersControllers {
         { sort: 'createdAt desc' }
       );
 
-      return res.json({ error: {}, data: { users } });
+      return res.json({ data: { users } });
     } catch (err) {
-      return res.status(500).json({ error: { message: 'Something went wrong.' }, data: {} });  
+      return res.status(500).json({ error: { message: 'Something went wrong.' } });  
     }
   }
 
@@ -27,13 +27,13 @@ export class UsersControllers {
       const user = await User.findById(id, '-password -__v');
       
       if(user) {
-        return res.json({ error: {}, data: { user } }); 
+        return res.json({ data: { user } }); 
       }
 
-      return res.status(404).json({ error: { message: 'User not found.' }, data: {} });
+      return res.status(404).json({ error: { message: 'User not found.' } });
 
     } catch (err) {
-      return res.status(500).json({ error: { message: 'Something went wrong.' }, data: {} });  
+      return res.status(500).json({ error: { message: 'Something went wrong.' } });  
     }
   }
 
@@ -55,7 +55,7 @@ export class UsersControllers {
         constraints: error.constraints
       }));
 
-      return res.status(400).json({ errors: errorsInfo, data: {} });
+      return res.status(400).json({ error: { message: 'VALIDATION_ERROR', info: { errorsInfo } } });
     }
 
     try {
@@ -72,12 +72,12 @@ export class UsersControllers {
       );
       
       if (!user) {
-        return res.status(404).json({ error: { message: 'User to update does not exists.' }, data: {} });
+        return res.status(404).json({ error: { message: 'User to update does not exists.' } });
       }
 
-      return res.json({ error: {}, data: { user } })
+      return res.json({ data: { user } })
     } catch (err) {
-      return res.status(500).json({ error: { message: 'Something went wrong.' }, data: {} });
+      return res.status(500).json({ error: { message: 'Something went wrong.' } });
     }
   }
 
@@ -88,12 +88,12 @@ export class UsersControllers {
       const user = await User.findByIdAndDelete(id);
 
       if (!user) {
-        return res.status(404).json({ error: { message: 'User to delete does not exists.' }, data: {} });
+        return res.status(404).json({ error: { message: 'User to delete does not exists.' } });
       } 
 
-      return res.json({ error: {}, data: { message: 'User deleted successfully.' } });
+      return res.json({ data: { message: 'User deleted successfully.' } });
     } catch (err) {
-      return res.status(500).json({ error: { message: 'Something went wrong.' }, data: {} });
+      return res.status(500).json({ error: { message: 'Something went wrong.' } });
     }
   }
 }
