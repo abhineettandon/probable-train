@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { generate } from 'generate-password';
-import { hashSync } from 'bcrypt';
+import { hashSync } from 'bcryptjs';
 
 import { User } from '../Models/User';
 import { UpdateUserInput } from '../Inputs/UpdateUserInput';
@@ -111,10 +111,8 @@ export class UsersControllers {
       }
 
       const password = generate({ length: 10, numbers: true });
-      console.log('password', password);
-      const hashedPassword = hashSync(password, process.env.APP_SECRET as string);
-      console.log('hashed password', hashedPassword);
-      user.password = hashedPassword;
+
+      user.password = hashSync(password, process.env.APP_SECRET as string);;
       await user.save();
 
       const mailVariables = {
