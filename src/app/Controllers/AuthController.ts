@@ -54,7 +54,7 @@ class AuthController {
       infusionSoftId: input.infusionSoftId,
       role: RolesEnum.USER,
     } as UserInterface);
-    console.log('registered user', newUser);
+ 
     if(newUser) {
       await sendMail('registration', newUser.email, newUser, 'Registration Successfull');
 

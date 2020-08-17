@@ -44,13 +44,13 @@ export class UsersControllers {
     const { id } = req.params;
     const input: UpdateUserInput = req.body;
 
-    const updateInput = new UpdateUserInput();
+    const updateUserInput = new UpdateUserInput();
 
-    updateInput.firstName = input.firstName;
-    updateInput.lastName = input.lastName;
-    updateInput.role = input.role;
+    updateUserInput.firstName = input.firstName;
+    updateUserInput.lastName = input.lastName;
+    updateUserInput.role = input.role;
 
-    const errors = await validate(updateInput);
+    const errors = await validate(updateUserInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map(error => ({
