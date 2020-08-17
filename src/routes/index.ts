@@ -1,11 +1,13 @@
-import AuthRotues from './auth';
-import ProfileRoutes from './profile';
-import UserRoutes from './user';
-import ProductTypeRoutes from './productType';
+import AuthRotues from './auth.routes';
+import ProfileRoutes from './profile.routes';
+import UserRoutes from './user.routes';
+import ProductTypeRoutes from './productType.routes';
+import ProductRoutes from './product.routes';
 
 export {
   AuthRotues,
   ProfileRoutes,
   UserRoutes,
-  ProductTypeRoutes
+  ProductTypeRoutes,
+  ProductRoutes
 }
