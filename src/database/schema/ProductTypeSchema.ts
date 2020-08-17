@@ -5,9 +5,6 @@ const ProductTypeSchema: Schema = new Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-  }
 }, { timestamps: true });
 
 export { ProductTypeSchema };
