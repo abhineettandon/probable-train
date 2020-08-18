@@ -7,7 +7,7 @@ import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
 import { validate } from 'class-validator';
 
 export class ProductTypesController {
-  static index = async (req: Request, res: Response): Promise<Response> => {
+  static index = async (_req: Request, res: Response): Promise<Response> => {
     try {
       const productTypes = await ProductType.find({})
 
