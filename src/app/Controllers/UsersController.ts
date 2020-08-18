@@ -9,7 +9,7 @@ import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
 import { sendMail } from '../../utils/sendMail';
 
 export class UsersControllers {
-  static index = async (req: Request, res: Response): Promise<Response> => {
+  static index = async (_req: Request, res: Response): Promise<Response> => {
     try {
       const users = await User.find(
         {},

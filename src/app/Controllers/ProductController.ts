@@ -1,12 +1,14 @@
 import { Request, Response } from 'express';
+import { Schema } from 'mongoose';
 
 import { Product } from '../Models/Product';
 import { ProductInput } from '../Inputs/ProductInput';
 import { validate } from 'class-validator';
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
+import { ProductCategory } from '../Models/ProductCategory';
 
 export class ProductController {
-  static index = async (req: Request, res: Response): Promise<Response> => {
+  static index = async (_req: Request, res: Response): Promise<Response> => {
     const products = await Product.find({}).populate('productTypeId', 'title');
 
     return res.json({ data: { products } });
@@ -123,5 +125,20 @@ export class ProductController {
       return res.status(500).json({ error: { message: 'Cannot update product. Something went wrong!' } })
     }
 
+  }
+
+  static getCategories = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+
+    try {
+      const productCategories = await ProductCategory.find({
+        productId: id as unknown as Schema.Types.ObjectId,
+      });
+
+      return res.json({ data: { productCategories } });
+
+    } catch (err) {
+      return res.status(500).json({ message: 'Cannot query product categories. Something went wrong!' })
+    }
   }
 }
