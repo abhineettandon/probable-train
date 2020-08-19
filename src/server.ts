@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import { initialize, use } from 'passport';
 import cors from 'cors';
 
-import { AuthRotues, ProfileRoutes, UserRoutes, ProductTypeRoutes, ProductRoutes, ProductCategoryRoutes } from './routes';
+import { AuthRotues, ProfileRoutes, UserRoutes, ProductTypeRoutes, ProductRoutes, ProductCategoryRoutes, CategoryContentRoutes } from './routes';
 import { connectDatabase } from './utils/dbConnection'
 import { local, jwt } from './utils/strategies';
 import { OnlyAdmins, Auth } from './app/Middlewares';
@@ -40,7 +40,8 @@ export class Server {
     this.app.use('/users', OnlyAdmins, UserRoutes);
     this.app.use('/product-types', OnlyAdmins, ProductTypeRoutes);
     this.app.use('/products', OnlyAdmins, ProductRoutes);
-    this.app.use('/product-categories', OnlyAdmins, ProductCategoryRoutes)
+    this.app.use('/categories', OnlyAdmins, ProductCategoryRoutes);
+    this.app.use('/contents', OnlyAdmins, CategoryContentRoutes);
   }
 
   initializePassportAndStrategies() {

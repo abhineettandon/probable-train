@@ -4,6 +4,7 @@ import { ProfileController } from './ProfileController';
 import { ProductTypesController } from './ProductTypesController';
 import { ProductController } from './ProductController';
 import { ProductCategoryController } from './ProductCategoryController';
+import { CategoryContentController } from './CategoryContentController';
 
 export {
   AuthController,
@@ -12,4 +13,5 @@ export {
   ProductTypesController,
   ProductController,
   ProductCategoryController,
+  CategoryContentController
 }
