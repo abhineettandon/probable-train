@@ -5,6 +5,7 @@ import { ProductTypesController } from './ProductTypesController';
 import { ProductController } from './ProductController';
 import { ProductCategoryController } from './ProductCategoryController';
 import { CategoryContentController } from './CategoryContentController';
+import { AdminDashboardController } from './AdminDashboardController';
 
 export {
   AuthController,
@@ -13,5 +14,6 @@ export {
   ProductTypesController,
   ProductController,
   ProductCategoryController,
-  CategoryContentController
+  CategoryContentController,
+  AdminDashboardController
 }
