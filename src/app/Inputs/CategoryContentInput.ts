@@ -1,27 +1,24 @@
-import { IsArray, IsNotEmpty, IsString, IsEnum, IsMongoId } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsMongoId } from 'class-validator';
 import { Schema } from 'mongoose';
 
 import { VisibilityStatus } from '../../types/VisibilityStatusEnum';
 
-export class ProductCategoryInput {
+export class CategotyContentInput {
   @IsString()
   @IsNotEmpty({ message: 'Title should not be empty' })
   title: string
 
-  @IsMongoId({ message: 'Product Id is not valid' })
-  @IsNotEmpty({ message: 'Product Id should not be empty' })
-  productId: Schema.Types.ObjectId;
+  @IsMongoId({ message: 'Category Id is not valid' })
+  @IsNotEmpty({ message: 'Category Id should not be empty' })
+  categoryId: Schema.Types.ObjectId;
 
   @IsString()
   description: string;
 
+  @IsString()
+  body: string;
+
   @IsEnum(VisibilityStatus)
   @IsNotEmpty({ message: 'Status should not be empty' })
   status: VisibilityStatus;
-
-  @IsArray()
-  tags: string[];
-
-  @IsString()
-  lockedPageContent: string;
 }
