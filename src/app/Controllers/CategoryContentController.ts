@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
+import { validate } from 'class-validator';
 
 import { CategotyContentInput } from '../Inputs/CategoryContentInput'
-import { validate } from 'class-validator';
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
 import { CategoryContent } from '../Models/CategoryContent';
 

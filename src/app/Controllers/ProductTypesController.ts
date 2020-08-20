@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
+import { validate } from 'class-validator';
 
 import { ProductType } from '../Models/ProductType';
 import { ProductTypeInterface } from '../../types/ProductTypeInterface';
 import { ProductTypeInput } from '../Inputs/ProductTypeInput';
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
-import { validate } from 'class-validator';
 
 export class ProductTypesController {
   static index = async (_req: Request, res: Response): Promise<Response> => {
