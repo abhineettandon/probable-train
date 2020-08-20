@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
+import { validate } from 'class-validator';
 import { Schema } from 'mongoose';
 
 import { Product } from '../Models/Product';
 import { ProductInput } from '../Inputs/ProductInput';
-import { validate } from 'class-validator';
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
 import { ProductCategory } from '../Models/ProductCategory';
 

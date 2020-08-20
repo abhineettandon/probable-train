@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
+import { Schema } from 'mongoose';
 
 import { ProductCategory } from '../Models/ProductCategory';
 import { ProductCategoryInput } from '../Inputs/ProductCategoryInput';
 import { ValidationErrorResponse } from '../../types/ValidationErrorResponse';
+import { CategoryContent } from '../Models/CategoryContent';
 
 export class ProductCategoryController {
   static save = async (req: Request, res: Response): Promise<Response> => {
@@ -115,6 +117,20 @@ export class ProductCategoryController {
 
     } catch (err) {
       return res.status(500).json({ message: 'Cannot update category. Something went wrong!' })
+    }
+  }
+  
+  static getContents = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+
+    try {
+      const contents = await CategoryContent.find({
+        categoryId: id as unknown as Schema.Types.ObjectId,
+      });
+
+      return res.json({ data: { contents } });
+    } catch (err) {
+      return res.status(500).json({ message: 'Cannot query contents. Something went wrong!' });
     }
   }
 }
