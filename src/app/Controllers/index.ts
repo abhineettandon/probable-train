@@ -1,11 +1,12 @@
-import { AuthController } from './AuthController';
-import { UsersControllers } from './UsersController';
-import { ProfileController } from './ProfileController';
-import { ProductTypesController } from './ProductTypesController';
-import { ProductController } from './ProductController';
-import { ProductCategoryController } from './ProductCategoryController';
-import { CategoryContentController } from './CategoryContentController';
-import { AdminDashboardController } from './AdminDashboardController';
+import { AuthController } from "./AuthController";
+import { UsersControllers } from "./UsersController";
+import { ProfileController } from "./ProfileController";
+import { ProductTypesController } from "./ProductTypesController";
+import { ProductController } from "./ProductController";
+import { ProductCategoryController } from "./ProductCategoryController";
+import { CategoryContentController } from "./CategoryContentController";
+import { AdminDashboardController } from "./AdminDashboardController";
+import { FrontEndController } from "./FrontEndController";
 
 export {
   AuthController,
@@ -15,5 +16,6 @@ export {
   ProductController,
   ProductCategoryController,
   CategoryContentController,
-  AdminDashboardController
-}
+  AdminDashboardController,
+  FrontEndController,
+};
