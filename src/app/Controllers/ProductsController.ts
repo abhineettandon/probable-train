@@ -62,6 +62,24 @@ export class ProductsController {
     }
   };
 
+  static details = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+
+    try {
+      const product = await Product.findById(id);
+
+      if (!product) {
+        return res.status(404).json({ message: "Product not found." });
+      }
+
+      return res.json({ data: { product } });
+    } catch (error) {
+      return res.status(500).json({
+        message: "Cannot fetch product details. Something went wrong.",
+      });
+    }
+  };
+
   static update = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.params;
     const input: ProductInput = req.body;
