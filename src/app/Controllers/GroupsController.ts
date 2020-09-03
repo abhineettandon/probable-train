@@ -1,31 +1,31 @@
 import { Request, Response } from "express";
 import { validate } from "class-validator";
 
-import { Category } from "../Models/Category";
-import { CategoryInput } from "../Inputs/CategoryInput";
+import { Group } from "../Models/Group";
+import { GroupInput } from "../Inputs/GroupInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
 
-export class CategoriesController {
+export class GroupsController {
   static list = async (_req: Request, res: Response): Promise<Response> => {
     try {
-      const categories = await Category.find({});
+      const groups = await Group.find({});
 
-      return res.json({ data: { categories } });
+      return res.json({ data: { groups } });
     } catch (err) {
       return res.status(500).json({
-        message: "Cannot query categories. Something went wrong.",
+        message: "Cannot query groups. Something went wrong.",
       });
     }
   };
 
   static save = async (req: Request, res: Response): Promise<Response> => {
-    const input: CategoryInput = req.body;
+    const input: GroupInput = req.body;
 
-    const categoryInput = new CategoryInput();
+    const groupInput = new GroupInput();
 
-    categoryInput.title = input.title;
+    groupInput.title = input.title;
 
-    const errors = await validate(categoryInput);
+    const errors = await validate(groupInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
@@ -39,16 +39,16 @@ export class CategoriesController {
     }
 
     try {
-      await Category.create({
+      await Group.create({
         title: input.title,
       });
 
       return res.json({
-        message: "Category created successfully. ",
+        message: "Group created successfully. ",
       });
     } catch (err) {
       return res.status(500).json({
-        message: "Cannot create Category. Something went wrong.",
+        message: "Cannot create Group. Something went wrong.",
       });
     }
   };
@@ -56,13 +56,13 @@ export class CategoriesController {
   static update = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.params;
 
-    const input: CategoryInput = req.body;
+    const input: GroupInput = req.body;
 
-    const categoryInput = new CategoryInput();
+    const groupInput = new GroupInput();
 
-    categoryInput.title = input.title;
+    groupInput.title = input.title;
 
-    const errors = await validate(categoryInput);
+    const errors = await validate(groupInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
@@ -76,7 +76,7 @@ export class CategoriesController {
     }
 
     try {
-      const category = await Category.findByIdAndUpdate(
+      const group = await Group.findByIdAndUpdate(
         id,
         {
           title: input.title,
@@ -86,16 +86,16 @@ export class CategoriesController {
         }
       );
 
-      if (!category) {
+      if (!group) {
         return res
           .status(404)
-          .json({ message: "Category to update does not exists." });
+          .json({ message: "Group to update does not exists." });
       }
 
-      return res.json({ message: "Category updated successfully." });
+      return res.json({ message: "Group updated successfully." });
     } catch (err) {
       return res.status(500).json({
-        message: "Cannot update Category. Something went wrong.",
+        message: "Cannot update Group. Something went wrong.",
       });
     }
   };

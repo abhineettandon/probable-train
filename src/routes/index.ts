@@ -2,7 +2,7 @@ import AuthRotues from "./auth.routes";
 import ProfileRoutes from "./profile.routes";
 import UserRoutes from "./user.routes";
 import AdminDashboardRoutes from "./adminDashboard.routes";
-import CategoryRoutes from "./category.routes";
+import GroupRoutes from "./group.routes";
 import ProductRoutes from "./product.routes";
 
 export {
@@ -10,6 +10,6 @@ export {
   ProfileRoutes,
   UserRoutes,
   AdminDashboardRoutes,
-  CategoryRoutes,
+  GroupRoutes,
   ProductRoutes,
 };

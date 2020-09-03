@@ -8,7 +8,7 @@ import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
 export class ProductsController {
   static list = async (_req: Request, res: Response): Promise<Response> => {
     try {
-      const products = await Product.find({}).populate("categoryId", "title");
+      const products = await Product.find({}).populate("groupId", "title");
 
       return res.json({ data: { products } });
     } catch (error) {
@@ -25,7 +25,7 @@ export class ProductsController {
 
     productInput.title = input.title;
     productInput.description = input.description;
-    productInput.categoryId = input.categoryId;
+    productInput.groupId = input.groupId;
     productInput.status = input.status;
     productInput.tags = input.tags;
     productInput.lockedPageContent = input.lockedPageContent;
@@ -47,7 +47,7 @@ export class ProductsController {
       await Product.create({
         title: input.title,
         description: input.description,
-        categoryId: input.categoryId,
+        groupId: input.groupId,
         status: input.status,
         tags: input.tags,
         lockedPageContent: input.lockedPageContent,
@@ -55,6 +55,7 @@ export class ProductsController {
 
       return res.json({ message: "Product created successfully." });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         message: "Cannot create product. Something went wrong.",
       });
@@ -69,7 +70,7 @@ export class ProductsController {
 
     productInput.title = input.title;
     productInput.description = input.description;
-    productInput.categoryId = input.categoryId;
+    productInput.groupId = input.groupId;
     productInput.status = input.status;
     productInput.tags = input.tags;
     productInput.lockedPageContent = input.lockedPageContent;
@@ -93,7 +94,7 @@ export class ProductsController {
         {
           title: input.title,
           description: input.description,
-          categoryId: input.categoryId,
+          groupId: input.groupId,
           status: input.status,
           tags: input.tags,
           lockedPageContent: input.lockedPageContent,

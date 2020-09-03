@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
 
-export interface CategoryInterface extends Document {
+export interface GroupInterface extends Document {
   title: String;
 }

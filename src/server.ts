@@ -9,7 +9,7 @@ import {
   ProfileRoutes,
   UserRoutes,
   AdminDashboardRoutes,
-  CategoryRoutes,
+  GroupRoutes,
   ProductRoutes,
 } from "./routes";
 import { connectDatabase } from "./utils/dbConnection";
@@ -47,7 +47,7 @@ export class Server {
     this.app.use("/users", OnlyAdmins, UserRoutes);
     this.app.use("/dashboard", OnlyAdmins, AdminDashboardRoutes);
     // this.app.use("/fe/", Auth, FrontEndRouters);
-    this.app.use("/categories", OnlyAdmins, CategoryRoutes);
+    this.app.use("/groups", OnlyAdmins, GroupRoutes);
     this.app.use("/products", OnlyAdmins, ProductRoutes);
   }
 

@@ -11,8 +11,8 @@ export class ProductInput {
   description: String;
 
   @IsMongoId()
-  @IsNotEmpty({ message: "Category ID must not be empty." })
-  categoryId: Schema.Types.ObjectId;
+  @IsNotEmpty({ message: "Group ID must not be empty." })
+  groupId: Schema.Types.ObjectId;
 
   @IsEnum(VisibilityStatus)
   status: VisibilityStatus;
