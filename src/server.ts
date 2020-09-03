@@ -9,7 +9,8 @@ import {
   ProfileRoutes,
   UserRoutes,
   AdminDashboardRoutes,
-  ProductCategoryRoutes,
+  CategoryRoutes,
+  ProductRoutes,
 } from "./routes";
 import { connectDatabase } from "./utils/dbConnection";
 import { local, jwt } from "./utils/strategies";
@@ -46,7 +47,8 @@ export class Server {
     this.app.use("/users", OnlyAdmins, UserRoutes);
     this.app.use("/dashboard", OnlyAdmins, AdminDashboardRoutes);
     // this.app.use("/fe/", Auth, FrontEndRouters);
-    this.app.use("/product-categories", OnlyAdmins, ProductCategoryRoutes);
+    this.app.use("/categories", OnlyAdmins, CategoryRoutes);
+    this.app.use("/products", OnlyAdmins, ProductRoutes);
   }
 
   initializePassportAndStrategies() {
