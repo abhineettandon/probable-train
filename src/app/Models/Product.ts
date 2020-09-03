@@ -1,8 +1,9 @@
-import { Model, model } from 'mongoose';
+import { model, Model } from "mongoose";
 
-import { ProductInterface } from '../../types/ProductInterface';
-import { ProductTypeSchema } from '../../database/schema/ProductSchema';
+import { ProductInterface } from "../../types/ProductInterface";
+import { ProductSchema } from "../../database/schema/ProductSchema";
 
-const Product: Model<ProductInterface> = model<ProductInterface>('Product', ProductTypeSchema);
-
-export { Product };
+export const Product: Model<ProductInterface> = model<ProductInterface>(
+  "Product",
+  ProductSchema
+);

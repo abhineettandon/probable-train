@@ -1,12 +1,11 @@
-import { Document, Schema } from 'mongoose';
-
-import { VisibilityStatus } from './VisibilityStatusEnum';
+import { Document, Schema } from "mongoose";
+import { VisibilityStatus } from "./VisibilityStatusEnum";
 
 export interface ProductInterface extends Document {
-  title: string;
-  productTypeId: Schema.Types.ObjectId;
-  description: string;
+  title: String;
+  categoryId: Schema.Types.ObjectId;
+  description: String;
   status: VisibilityStatus;
-  tags: string[];
-  lockedPageContent: string;
+  tags: String[];
+  lockedPageContent: String;
 }
