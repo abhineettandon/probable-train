@@ -1,31 +1,31 @@
 import { Request, Response } from "express";
 import { validate } from "class-validator";
 
-import { ProductCategory } from "../Models/ProductCategory";
-import { ProductCategoryInput } from "../Inputs/ProductCategoryInput";
+import { Category } from "../Models/Category";
+import { CategoryInput } from "../Inputs/CategoryInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
 
-export class ProductCategoryController {
+export class CategoriesController {
   static list = async (_req: Request, res: Response): Promise<Response> => {
     try {
-      const productCategories = await ProductCategory.find({});
+      const categories = await Category.find({});
 
-      return res.json({ data: { productCategories } });
+      return res.json({ data: { categories } });
     } catch (err) {
       return res.status(500).json({
-        message: "Cannot query product categories. Something went wrong.",
+        message: "Cannot query categories. Something went wrong.",
       });
     }
   };
 
   static save = async (req: Request, res: Response): Promise<Response> => {
-    const input: ProductCategoryInput = req.body;
+    const input: CategoryInput = req.body;
 
-    const productCategoryInput = new ProductCategoryInput();
+    const categoryInput = new CategoryInput();
 
-    productCategoryInput.title = input.title;
+    categoryInput.title = input.title;
 
-    const errors = await validate(productCategoryInput);
+    const errors = await validate(categoryInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
@@ -39,16 +39,16 @@ export class ProductCategoryController {
     }
 
     try {
-      await ProductCategory.create({
+      await Category.create({
         title: input.title,
       });
 
       return res.json({
-        message: "Product category created successfully. ",
+        message: "Category created successfully. ",
       });
     } catch (err) {
       return res.status(500).json({
-        message: "Cannot create product category. Something went wrong.",
+        message: "Cannot create Category. Something went wrong.",
       });
     }
   };
@@ -56,13 +56,13 @@ export class ProductCategoryController {
   static update = async (req: Request, res: Response): Promise<Response> => {
     const { id } = req.params;
 
-    const input: ProductCategoryInput = req.body;
+    const input: CategoryInput = req.body;
 
-    const productCategoryInput = new ProductCategoryInput();
+    const categoryInput = new CategoryInput();
 
-    productCategoryInput.title = input.title;
+    categoryInput.title = input.title;
 
-    const errors = await validate(productCategoryInput);
+    const errors = await validate(categoryInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
@@ -76,7 +76,7 @@ export class ProductCategoryController {
     }
 
     try {
-      const productCategory = await ProductCategory.findByIdAndUpdate(
+      const category = await Category.findByIdAndUpdate(
         id,
         {
           title: input.title,
@@ -86,16 +86,16 @@ export class ProductCategoryController {
         }
       );
 
-      if (!productCategory) {
+      if (!category) {
         return res
           .status(404)
-          .json({ message: "Product category to update does not exists." });
+          .json({ message: "Category to update does not exists." });
       }
 
-      return res.json({ message: "Product category updated successfully." });
+      return res.json({ message: "Category updated successfully." });
     } catch (err) {
       return res.status(500).json({
-        message: "Cannot update product category. Something went wrong.",
+        message: "Cannot update Category. Something went wrong.",
       });
     }
   };
