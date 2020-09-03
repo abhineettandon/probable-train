@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-export const CategorySchema: Schema = new Schema(
+export const GroupSchema: Schema = new Schema(
   {
     title: {
       type: String,

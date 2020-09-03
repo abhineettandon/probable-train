@@ -7,9 +7,9 @@ export const ProductSchema: Schema = new Schema(
       required: true,
     },
     description: String,
-    categoryId: {
+    groupId: {
       type: Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "Group",
       required: true,
     },
     status: {
