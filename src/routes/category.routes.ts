@@ -6,5 +6,7 @@ const category: Router = Router();
 
 category.get("/", CategoryConroller.list);
 category.post("/", CategoryConroller.save);
+category.get("/:id", CategoryConroller.details);
+category.put("/:id", CategoryConroller.update);
 
 export default category;
