@@ -46,6 +46,8 @@
     "passport-local": "^1.0.0"
   },
   "husky": {
-    "pre-commit": "npm build"
+    "hooks": {
+      "pre-commit": "npm build"
+    }
   }
 }
