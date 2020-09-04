@@ -3,7 +3,6 @@ import {
   IsString,
   IsNotEmpty,
   IsMongoId,
-  ValidateIf,
   IsOptional,
 } from "class-validator";
 import { Schema } from "mongoose";
