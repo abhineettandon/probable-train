@@ -1,14 +1,21 @@
 import { Request, Response } from "express";
+import { validate, ValidationError } from "class-validator";
 
 import { Product } from "../Models/Product";
 import { ProductInput } from "../Inputs/ProductInput";
-import { validate } from "class-validator";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
+import { CategoryInterface } from "../../types/CategoryInterface";
+import { Category } from "../Models/Category";
+import { Schema } from "mongoose";
+import { ProductInterface } from "../../types/ProductInterface";
 
 export class ProductsController {
   static list = async (_req: Request, res: Response): Promise<Response> => {
     try {
-      const products = await Product.find({}).populate("groupId", "title");
+      const products: ProductInterface[] = await Product.find({}).populate(
+        "groupId",
+        "title"
+      );
 
       return res.json({ data: { products } });
     } catch (error) {
@@ -21,7 +28,7 @@ export class ProductsController {
   static save = async (req: Request, res: Response): Promise<Response> => {
     const input: ProductInput = req.body;
 
-    const productInput = new ProductInput();
+    const productInput: ProductInput = new ProductInput();
 
     productInput.title = input.title;
     productInput.description = input.description;
@@ -30,7 +37,7 @@ export class ProductsController {
     productInput.tags = input.tags;
     productInput.lockedPageContent = input.lockedPageContent;
 
-    const errors = await validate(productInput);
+    const errors: ValidationError[] = await validate(productInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
@@ -63,10 +70,10 @@ export class ProductsController {
   };
 
   static details = async (req: Request, res: Response): Promise<Response> => {
-    const { id } = req.params;
+    const { id }: { id?: Schema.Types.ObjectId } = req.params;
 
     try {
-      const product = await Product.findById(id);
+      const product: ProductInterface | null = await Product.findById(id);
 
       if (!product) {
         return res.status(404).json({ message: "Product not found." });
@@ -81,10 +88,10 @@ export class ProductsController {
   };
 
   static update = async (req: Request, res: Response): Promise<Response> => {
-    const { id } = req.params;
+    const { id }: { id?: Schema.Types.ObjectId } = req.params;
     const input: ProductInput = req.body;
 
-    const productInput = new ProductInput();
+    const productInput: ProductInput = new ProductInput();
 
     productInput.title = input.title;
     productInput.description = input.description;
@@ -93,7 +100,7 @@ export class ProductsController {
     productInput.tags = input.tags;
     productInput.lockedPageContent = input.lockedPageContent;
 
-    const errors = await validate(productInput);
+    const errors: ValidationError[] = await validate(productInput);
 
     if (errors.length) {
       const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
@@ -107,7 +114,7 @@ export class ProductsController {
     }
 
     try {
-      const product = await Product.findByIdAndUpdate(
+      const product: ProductInterface | null = await Product.findByIdAndUpdate(
         id,
         {
           title: input.title,
@@ -133,6 +140,25 @@ export class ProductsController {
       return res.status(500).json({
         error: { message: "Cannot update product. Something went wrong!" },
       });
+    }
+  };
+
+  static getCategories = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+
+    try {
+      const categories: CategoryInterface[] = await Category.find({
+        productId: id,
+      });
+
+      return res.json({ data: { categories } });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot get categories. Something went wrong." });
     }
   };
 }
