@@ -5,7 +5,7 @@ import {
   IsMongoId,
   IsOptional,
 } from "class-validator";
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
 
 import { VisibilityStatus } from "../../types/VisibilityStatusEnum";
 
@@ -19,11 +19,11 @@ export class CategoryInput {
 
   @IsMongoId()
   @IsNotEmpty({ message: "Product Id should not be empty" })
-  productId: Schema.Types.ObjectId;
+  productId: Types.ObjectId;
 
   @IsOptional()
   @IsMongoId()
-  parentCategoryId: Schema.Types.ObjectId;
+  parentCategoryId: Types.ObjectId;
 
   @IsEnum(VisibilityStatus)
   status: VisibilityStatus;

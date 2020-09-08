@@ -1,9 +1,9 @@
-import { Document, Schema } from 'mongoose';
+import { Document, Types } from "mongoose";
 
-import { RolesEnum } from './RolesEnum';
+import { RolesEnum } from "./RolesEnum";
 
 export interface UserInterface extends Document {
-  _id: Schema.Types.ObjectId;
+  _id: Types.ObjectId;
   firstName: string;
   lastName: string;
   email: string;

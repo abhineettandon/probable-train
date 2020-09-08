@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
 
 import { Category } from "../Models/Category";
 import { CategoryInterface } from "../../types/CategoryInterface";
@@ -69,7 +69,7 @@ export class CategoryConroller {
   };
 
   static details = async (req: Request, res: Response): Promise<Response> => {
-    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+    const { id }: { id?: Types.ObjectId } = req.params;
 
     try {
       const category: CategoryInterface | null = await Category.findById(
@@ -89,7 +89,7 @@ export class CategoryConroller {
   };
 
   static update = async (req: Request, res: Response): Promise<Response> => {
-    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+    const { id }: { id?: Types.ObjectId } = req.params;
 
     const input: CategoryInput = req.body;
 
@@ -153,7 +153,7 @@ export class CategoryConroller {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+    const { id }: { id?: Types.ObjectId } = req.params;
 
     try {
       const contents = await Content.find({
