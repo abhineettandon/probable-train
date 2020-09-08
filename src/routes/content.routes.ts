@@ -9,6 +9,6 @@ content.get("/:id", ContentController.details);
 content.patch("/:id", ContentController.update);
 content.put("/:id", ContentController.savePostToSubCategory);
 content.get("/:id/:postId", ContentController.getPostFromSubCategory);
-// content.patch("/:id/:postId", ContentController.updatePost);
+content.patch("/:id/:postId", ContentController.updatePostFromSubCategory);
 
 export default content;

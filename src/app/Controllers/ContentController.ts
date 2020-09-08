@@ -256,4 +256,68 @@ export class ContentController {
         .json({ message: "Cannot fetch post. Something went wrong" });
     }
   };
+
+  static updatePostFromSubCategory = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const {
+      id,
+      postId,
+    }: { id?: Types.ObjectId; postId?: Types.ObjectId } = req.params;
+
+    const input: PostInput = req.body;
+
+    const postInput = new PostInput();
+
+    postInput.title = input.title;
+    postInput.description = input.description;
+    postInput.body = input.body;
+    postInput.status = input.status;
+
+    const errors = await validate(postInput);
+
+    if (errors.length) {
+      const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
+        property: error.property,
+        constraints: error.constraints,
+      }));
+
+      return res
+        .status(400)
+        .json({ error: { message: "VALIDATIONS_ERROR", info: errorsInfo } });
+    }
+
+    try {
+      const post = await SubCategory.findOneAndUpdate(
+        {
+          _id: id,
+          "posts._id": postId,
+        },
+        {
+          "posts.$.title": input.title,
+          "posts.$.description": input.description,
+          "posts.$.body": input.body,
+          "posts.$.status": input.status,
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (!post) {
+        return res
+          .status(404)
+          .json({ message: "Post to update does not exists" });
+      }
+
+      return res.json({ message: "Post updated successfully." });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot update post. Something went wrong." });
+    }
+
+    return res;
+  };
 }
