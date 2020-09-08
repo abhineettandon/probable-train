@@ -5,6 +5,7 @@ import AdminDashboardRoutes from "./adminDashboard.routes";
 import GroupRoutes from "./group.routes";
 import ProductRoutes from "./product.routes";
 import CategoryRoutes from "./category.routes";
+import ContentRoutes from "./content.routes";
 
 export {
   AuthRotues,
@@ -14,4 +15,5 @@ export {
   GroupRoutes,
   ProductRoutes,
   CategoryRoutes,
+  ContentRoutes,
 };
