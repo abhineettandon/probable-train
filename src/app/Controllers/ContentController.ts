@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validate } from "class-validator";
-import { Types } from "mongoose";
+import { Types, Schema } from "mongoose";
 
 import { ContentInput } from "../Inputs/ContentInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
@@ -317,7 +317,25 @@ export class ContentController {
         .status(500)
         .json({ message: "Cannot update post. Something went wrong." });
     }
+  };
 
-    return res;
+  static destroy = async (req: Request, res: Response): Promise<Response> => {
+    const { id }: { id?: Types.ObjectId } = req.params;
+
+    try {
+      const post = await Post.findByIdAndDelete(id);
+
+      if (!post) {
+        return res
+          .status(404)
+          .json({ message: "Post to delete does not exists" });
+      }
+
+      return res.json({ message: "Post deleted successfully." });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot delete post. Something went wrong." });
+    }
   };
 }
