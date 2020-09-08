@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validate } from "class-validator";
-import { Types, Schema } from "mongoose";
+import { Types } from "mongoose";
 
 import { ContentInput } from "../Inputs/ContentInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
@@ -333,6 +333,41 @@ export class ContentController {
 
       return res.json({ message: "Post deleted successfully." });
     } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot delete post. Something went wrong." });
+    }
+  };
+
+  static destroyPostFromSubCategory = async (req: Request, res: Response) => {
+    const {
+      id,
+      postId,
+    }: { id?: Types.ObjectId; postId?: Types.ObjectId } = req.params;
+
+    try {
+      const post = await SubCategory.findOneAndUpdate(
+        {
+          _id: id,
+          "posts._id": postId,
+        },
+        {
+          $pull: { posts: { _id: postId } },
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (!post) {
+        return res
+          .status(404)
+          .json({ message: "Post to delete does not exists" });
+      }
+
+      return res.json({ message: "Post deleted successfully" });
+    } catch (error) {
+      console.log(error);
       return res
         .status(500)
         .json({ message: "Cannot delete post. Something went wrong." });

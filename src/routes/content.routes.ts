@@ -11,5 +11,6 @@ content.put("/:id", ContentController.savePostToSubCategory);
 content.get("/:id/:postId", ContentController.getPostFromSubCategory);
 content.patch("/:id/:postId", ContentController.updatePostFromSubCategory);
 content.delete("/:id", ContentController.destroy);
+content.delete("/:id/:postId", ContentController.destroyPostFromSubCategory);
 
 export default content;
