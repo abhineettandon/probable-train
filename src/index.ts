@@ -1,6 +1,6 @@
-import 'dotenv/config';
+import "dotenv/config";
 
-import { Server } from './server';
+import { Server } from "./server";
 
 const server = new Server(process.env.PORT as String);
 

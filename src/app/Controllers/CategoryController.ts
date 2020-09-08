@@ -6,6 +6,7 @@ import { CategoryInterface } from "../../types/CategoryInterface";
 import { CategoryInput } from "../Inputs/CategoryInput";
 import { ValidationError, validate } from "class-validator";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
+import { Content } from "../Models/Content";
 
 export class CategoryConroller {
   static list = async (_req: Request, res: Response): Promise<Response> => {
@@ -145,6 +146,25 @@ export class CategoryConroller {
       return res
         .status(500)
         .json({ message: "Cannot update category. Something went wrong" });
+    }
+  };
+
+  static getContents = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+
+    try {
+      const contents = await Content.find({
+        categoryId: id,
+      });
+
+      return res.json({ data: { contents } });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot fetch contents. Something went wrong." });
     }
   };
 }
