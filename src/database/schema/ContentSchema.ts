@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 
 export const ContentSchema: Schema = new Schema(
   {
@@ -8,7 +8,7 @@ export const ContentSchema: Schema = new Schema(
     },
     description: String,
     categoryId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       required: true,
       ref: "Category",
     },

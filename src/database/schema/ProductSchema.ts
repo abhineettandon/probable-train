@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 
 export const ProductSchema: Schema = new Schema(
   {
@@ -8,7 +8,7 @@ export const ProductSchema: Schema = new Schema(
     },
     description: String,
     groupId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Group",
       required: true,
     },

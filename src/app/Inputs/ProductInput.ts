@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsMongoId, IsEnum } from "class-validator";
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
 
 import { VisibilityStatus } from "../../types/VisibilityStatusEnum";
 
@@ -13,7 +13,7 @@ export class ProductInput {
 
   @IsMongoId()
   @IsNotEmpty({ message: "Group ID must not be empty." })
-  groupId: Schema.Types.ObjectId;
+  groupId: Types.ObjectId;
 
   @IsEnum(VisibilityStatus)
   status: VisibilityStatus;

@@ -5,8 +5,8 @@ import {
   IsString,
   ValidateIf,
 } from "class-validator";
+import { Types } from "mongoose";
 
-import { Schema } from "mongoose";
 import { ContentTypeEnum } from "../../types/ContentTypeEnum";
 import { VisibilityStatus } from "../../types/VisibilityStatusEnum";
 
@@ -20,7 +20,7 @@ export class ContentInput {
 
   @IsMongoId()
   @IsNotEmpty({ message: "Category ID should not be empty" })
-  categoryId: Schema.Types.ObjectId;
+  categoryId: Types.ObjectId;
 
   @IsEnum(ContentTypeEnum)
   contentType: ContentTypeEnum;

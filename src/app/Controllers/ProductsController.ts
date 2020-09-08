@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { validate, ValidationError } from "class-validator";
+import { Types } from "mongoose";
 
 import { Product } from "../Models/Product";
 import { ProductInput } from "../Inputs/ProductInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
 import { CategoryInterface } from "../../types/CategoryInterface";
 import { Category } from "../Models/Category";
-import { Schema } from "mongoose";
 import { ProductInterface } from "../../types/ProductInterface";
 
 export class ProductsController {
@@ -70,7 +70,7 @@ export class ProductsController {
   };
 
   static details = async (req: Request, res: Response): Promise<Response> => {
-    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+    const { id }: { id?: Types.ObjectId } = req.params;
 
     try {
       const product: ProductInterface | null = await Product.findById(id);
@@ -88,7 +88,7 @@ export class ProductsController {
   };
 
   static update = async (req: Request, res: Response): Promise<Response> => {
-    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+    const { id }: { id?: Types.ObjectId } = req.params;
     const input: ProductInput = req.body;
 
     const productInput: ProductInput = new ProductInput();
@@ -147,7 +147,7 @@ export class ProductsController {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+    const { id }: { id?: Types.ObjectId } = req.params;
 
     try {
       const categories: CategoryInterface[] = await Category.find({

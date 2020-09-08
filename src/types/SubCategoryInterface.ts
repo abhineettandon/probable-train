@@ -1,7 +1,10 @@
+import { Types } from "mongoose";
+
 import { ContentInterface } from "./ContentInterface";
 import { VisibilityStatus } from "./VisibilityStatusEnum";
 
-type Post = {
+export type SubCategoryPost = {
+  _id: Types.ObjectId;
   title: String;
   description: String;
   body: String;
@@ -9,5 +12,5 @@ type Post = {
 };
 
 export interface SubCategoryInterface extends ContentInterface {
-  posts: Post[];
+  posts: SubCategoryPost[];
 }

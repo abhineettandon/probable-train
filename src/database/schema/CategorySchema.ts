@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 
 export const CategorySchema: Schema = new Schema(
   {
@@ -8,12 +8,12 @@ export const CategorySchema: Schema = new Schema(
     },
     description: String,
     productId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Product",
       required: true,
     },
     parentCategoryId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: "Category",
     },
     status: {
