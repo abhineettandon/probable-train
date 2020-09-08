@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { validate } from "class-validator";
+import { Schema } from "mongoose";
 
 import { ContentInput } from "../Inputs/ContentInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
 import { ContentTypeEnum } from "../../types/ContentTypeEnum";
-import { Post, SubCategory } from "../Models/Content";
+import { Post, SubCategory, Content } from "../Models/Content";
 
 export class ContentController {
   static save = async (req: Request, res: Response): Promise<Response> => {
@@ -64,6 +65,24 @@ export class ContentController {
       return res.status(500).json({
         message: `Cannot create ${input.contentType}. Something went wrong.`,
       });
+    }
+  };
+
+  static details = async (req: Request, res: Response): Promise<Response> => {
+    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+
+    try {
+      const content = await Content.findById(id);
+
+      if (!content) {
+        return res.status(404).json({ message: "Content not found." });
+      }
+
+      return res.json({ data: { content } });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot fetch details. Something went wrong." });
     }
   };
 }
