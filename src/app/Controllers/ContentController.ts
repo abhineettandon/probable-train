@@ -317,7 +317,60 @@ export class ContentController {
         .status(500)
         .json({ message: "Cannot update post. Something went wrong." });
     }
+  };
 
-    return res;
+  static destroy = async (req: Request, res: Response): Promise<Response> => {
+    const { id }: { id?: Types.ObjectId } = req.params;
+
+    try {
+      const post = await Post.findByIdAndDelete(id);
+
+      if (!post) {
+        return res
+          .status(404)
+          .json({ message: "Post to delete does not exists" });
+      }
+
+      return res.json({ message: "Post deleted successfully." });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot delete post. Something went wrong." });
+    }
+  };
+
+  static destroyPostFromSubCategory = async (req: Request, res: Response) => {
+    const {
+      id,
+      postId,
+    }: { id?: Types.ObjectId; postId?: Types.ObjectId } = req.params;
+
+    try {
+      const post = await SubCategory.findOneAndUpdate(
+        {
+          _id: id,
+          "posts._id": postId,
+        },
+        {
+          $pull: { posts: { _id: postId } },
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (!post) {
+        return res
+          .status(404)
+          .json({ message: "Post to delete does not exists" });
+      }
+
+      return res.json({ message: "Post deleted successfully" });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(500)
+        .json({ message: "Cannot delete post. Something went wrong." });
+    }
   };
 }
