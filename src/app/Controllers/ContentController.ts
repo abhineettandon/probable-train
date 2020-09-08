@@ -6,6 +6,7 @@ import { ContentInput } from "../Inputs/ContentInput";
 import { ValidationErrorResponse } from "../../types/ValidationErrorResponse";
 import { ContentTypeEnum } from "../../types/ContentTypeEnum";
 import { Post, SubCategory, Content } from "../Models/Content";
+import { PostInput } from "../Inputs/PostInput";
 
 export class ContentController {
   static save = async (req: Request, res: Response): Promise<Response> => {
@@ -156,6 +157,65 @@ export class ContentController {
       return res.status(500).json({
         message: `Cannot create ${input.contentType}. Something went wrong.`,
       });
+    }
+  };
+
+  static savePost = async (req: Request, res: Response): Promise<Response> => {
+    const { id }: { id?: Schema.Types.ObjectId } = req.params;
+
+    const input: PostInput = req.body;
+
+    const postInput = new PostInput();
+
+    postInput.title = input.title;
+    postInput.description = input.description;
+    postInput.body = input.body;
+    postInput.status = input.status;
+
+    const errors = await validate(postInput);
+
+    if (errors.length) {
+      const errorsInfo: ValidationErrorResponse[] = errors.map((error) => ({
+        property: error.property,
+        constraints: error.constraints,
+      }));
+
+      return res
+        .status(400)
+        .json({ error: { message: "VALIDATIONS_ERROR", info: errorsInfo } });
+    }
+
+    try {
+      const subCategory = await SubCategory.findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            posts: {
+              title: input.title,
+              description: input.description,
+              body: input.body,
+              status: input.status,
+            },
+          },
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (!subCategory) {
+        return res
+          .status(404)
+          .json({ message: "Sub Category to add post does not exists." });
+      }
+
+      return res.json({
+        message: "Post created succesfully in sub category",
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot save post. Something went wrong." });
     }
   };
 }
