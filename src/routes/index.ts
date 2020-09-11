@@ -6,6 +6,7 @@ import GroupRoutes from "./group.routes";
 import ProductRoutes from "./product.routes";
 import CategoryRoutes from "./category.routes";
 import ContentRoutes from "./content.routes";
+import FrontendRoutes from "./frontend.routes";
 
 export {
   AuthRotues,
@@ -16,4 +17,5 @@ export {
   ProductRoutes,
   CategoryRoutes,
   ContentRoutes,
+  FrontendRoutes,
 };
