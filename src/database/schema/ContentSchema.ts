@@ -12,6 +12,10 @@ export const ContentSchema: Schema = new Schema(
       required: true,
       ref: "Category",
     },
+    status: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true, discriminatorKey: "contentType" }
 );

@@ -5,6 +5,7 @@ import { Group } from "../Models/Group";
 import { Product } from "../Models/Product";
 import { Category } from "../Models/Category";
 import { VisibilityStatus } from "../../types/VisibilityStatusEnum";
+import { Content } from "../Models/Content";
 
 export class FrontendController {
   static getGroups = async (req: Request, res: Response): Promise<Response> => {
@@ -70,6 +71,26 @@ export class FrontendController {
       return res
         .status(500)
         .json({ message: "Cannot get categories. Something went wrong." });
+    }
+  };
+
+  static getContents = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const { id }: { id?: Types.ObjectId } = req.params;
+
+    try {
+      const contents = await Content.find({
+        _id: id,
+        status: VisibilityStatus.PUBLISHED,
+      });
+
+      return res.json({ data: { contents } });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot get contents. Something went wrong." });
     }
   };
 }
