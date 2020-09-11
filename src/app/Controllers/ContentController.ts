@@ -8,6 +8,7 @@ import { ContentTypeEnum } from "../../types/ContentTypeEnum";
 import { Post, SubCategory, Content } from "../Models/Content";
 import { PostInput } from "../Inputs/PostInput";
 import { SubCategoryPost } from "../../types/SubCategoryInterface";
+import { VisibilityStatus } from "../../types/VisibilityStatusEnum";
 
 export class ContentController {
   static save = async (req: Request, res: Response): Promise<Response> => {
@@ -43,7 +44,6 @@ export class ContentController {
           categoryId: input.categoryId,
           body: input.body,
           status: input.status,
-          kind: ContentTypeEnum.POST,
         });
 
         return res.json({ message: "Post created successfully" });
@@ -53,7 +53,7 @@ export class ContentController {
         title: input.title,
         description: input.description,
         categoryId: input.categoryId,
-        kind: ContentTypeEnum.SUB_CATEGORY,
+        status: VisibilityStatus.PUBLISHED,
         posts: [],
       });
 
