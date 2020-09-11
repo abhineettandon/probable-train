@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 
 import { Group } from "../Models/Group";
 import { Product } from "../Models/Product";
+import { Category } from "../Models/Category";
 import { VisibilityStatus } from "../../types/VisibilityStatusEnum";
 
 export class FrontendController {
@@ -42,6 +43,33 @@ export class FrontendController {
       return res
         .status(500)
         .json({ message: "Cannot get products. Something went wrong." });
+    }
+  };
+
+  static getCategories = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const { id }: { id?: Types.ObjectId } = req.params;
+
+    try {
+      const categories = await Category.find({
+        productId: id,
+        $or: [
+          {
+            status: VisibilityStatus.LOCKED,
+          },
+          {
+            status: VisibilityStatus.PUBLISHED,
+          },
+        ],
+      });
+
+      return res.json({ data: { categories } });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "Cannot get categories. Something went wrong." });
     }
   };
 }
