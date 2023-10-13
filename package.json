@@ -40,7 +40,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.9.27",
     "nodemailer": "^6.4.11",
-    "nodemailer-express-handlebars": "^4.0.0",
+    "nodemailer-express-handlebars": "^6.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
